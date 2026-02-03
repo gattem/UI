@@ -2,30 +2,60 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Valentine's Day 💖</title>
+  <title>For Shreedevi Patil 💖</title>
   <style>
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
       height: 100vh;
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      background: radial-gradient(circle at top, #ff758c, #ff7eb3, #2b1055);
       font-family: 'Segoe UI', sans-serif;
+      color: white;
+    }
+
+    .hearts span {
+      position: absolute;
+      bottom: -50px;
+      font-size: 24px;
+      animation: floatUp linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-110vh); opacity: 0; }
     }
 
     .card {
-      background: white;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 25px;
       padding: 40px;
-      border-radius: 20px;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      width: 350px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+      animation: fadeIn 2s ease;
+      max-width: 360px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
     }
 
     h1 {
-      color: #e63946;
+      font-size: 30px;
       margin-bottom: 10px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
     }
 
     p {
@@ -35,40 +65,56 @@
 
     .buttons {
       position: relative;
-      height: 60px;
+      height: 70px;
     }
 
     button {
-      padding: 12px 24px;
-      font-size: 16px;
+      padding: 14px 28px;
+      font-size: 17px;
       border: none;
-      border-radius: 30px;
+      border-radius: 40px;
       cursor: pointer;
+      transition: transform 0.2s;
     }
 
     #yesBtn {
-      background: #e63946;
+      background: linear-gradient(45deg, #ff416c, #ff4b2b);
       color: white;
-      margin-right: 10px;
+      box-shadow: 0 0 20px rgba(255,65,108,0.8);
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.1);
     }
 
     #noBtn {
       background: #adb5bd;
-      color: white;
+      color: black;
       position: absolute;
+      left: 120px;
     }
 
     .success {
       font-size: 22px;
-      color: #e63946;
-      margin-top: 20px;
+      margin-top: 25px;
+      animation: fadeIn 1.5s ease;
     }
   </style>
 </head>
 <body>
+
+  <!-- Floating hearts -->
+  <div class="hearts"></div>
+
+  <!-- Music -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  </audio>
+
   <div class="card">
-    <h1>Hey Shreedevi 💕</h1>
-    <p>Shreedevi, will you be my Valentine? 💖</p>
+    <h1>Shreedevi Patil 💖</h1>
+    <p>From the moment you entered my life,<br>everything became beautiful…</p>
+    <p><b>Will you be my Valentine? 🌹</b></p>
 
     <div class="buttons">
       <button id="yesBtn">Yes 😍</button>
@@ -82,16 +128,36 @@
     const noBtn = document.getElementById('noBtn');
     const yesBtn = document.getElementById('yesBtn');
     const result = document.getElementById('result');
+    const heartsContainer = document.querySelector('.hearts');
 
+    // No button escape
     noBtn.addEventListener('mouseover', () => {
-      const x = Math.random() * 200 - 100;
-      const y = Math.random() * 200 - 100;
+      const x = Math.random() * 260 - 130;
+      const y = Math.random() * 120 - 60;
       noBtn.style.transform = `translate(${x}px, ${y}px)`;
     });
 
+    // Yes click
     yesBtn.addEventListener('click', () => {
-      result.innerHTML = 'Yayyy! 💖 I knew you would say YES! 🥰';
+      result.innerHTML = 'Yayyy! 💖💖 You just made me the happiest person alive! 🥰';
+      createHearts(40);
     });
+
+    // Floating hearts generator
+    function createHearts(count = 20) {
+      for (let i = 0; i < count; i++) {
+        const heart = document.createElement('span');
+        heart.innerText = '❤️';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = 3 + Math.random() * 4 + 's';
+        heartsContainer.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 7000);
+      }
+    }
+
+    // Ambient hearts
+    setInterval(() => createHearts(5), 1500);
   </script>
 </body>
 </html>
